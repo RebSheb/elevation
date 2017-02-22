@@ -51,6 +51,8 @@ char GetDriveString(char *path)
 		return '1';
 	}
 
-	printf("[Ele] - Drive isn't C:\n");
+	LPTSTR volName;
+	GetVolumePathName(path, volName, sizeof(LPTSTR));
+	printf("[Ele] - Drive isn't C:\n%d\n",volName);
 	return '2';
 }
