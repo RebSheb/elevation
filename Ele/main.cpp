@@ -4,7 +4,8 @@
 char buf[MAX_PATH] = {};
 
 
-
+void executeProgram(char*);
+char GetDriveString(char*);
 
 void main()
 {
@@ -19,12 +20,37 @@ void main()
 
 	printf("[Ele] - %s\n", buf);
 
+	executeProgram(buf);
+
 	return;
 }
 
 void executeProgram(char *path)
 {
+	if (GetDriveString(path) == '1')
+	{
+		char execPath[MAX_PATH + 1] = {};
+		ZeroMemory(execPath, sizeof(execPath));
+		strcat_s(execPath, sizeof(execPath), "/K cd ");
+		strcat_s(execPath, sizeof(execPath), path);
+
+		printf("[Ele] - execPath: %s\n", execPath);
+
+		ShellExecute(NULL, "open", "C:\\Windows\\System32\\cmd.exe", execPath, NULL, SW_SHOW);
+	}
+
+	//ShellExecute(NULL, "open", "C:\\Windows\\System32\\cmd.exe", "")
+}
 
 
-	ShellExecute(NULL, "open", "C:\\Windows\\System32\\cmd.exe", "")
+char GetDriveString(char *path)
+{
+	if(buf[0] == 'C')
+	{
+		printf("[Ele] - Drive is C:\n");
+		return '1';
+	}
+
+	printf("[Ele] - Drive isn't C:\n");
+	return '2';
 }
